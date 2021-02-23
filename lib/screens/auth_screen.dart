@@ -78,7 +78,7 @@ class AuthScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    FlatButton(
+                    TextButton(
                         child: Text("Temporary Button"),
                         onPressed: () {
                           Navigator.of(context).pushNamed('/monument');

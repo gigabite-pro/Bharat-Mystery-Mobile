@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "539587749552",
+    "project_id": "toycathon-talking-toy",
+    "storage_bucket": "toycathon-talking-toy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:539587749552:android:df783f7d79e359be66bd75",
+        "android_client_info": {
+          "package_name": "com.example.bharat_mystery"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "539587749552-tgjtnfsabtneb7a4g2gsc78826pvmii3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5F2yia0PyFeTS75Ers5F5GyzVDNE9hNk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "539587749552-tgjtnfsabtneb7a4g2gsc78826pvmii3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

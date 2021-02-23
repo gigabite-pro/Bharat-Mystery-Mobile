@@ -26,10 +26,13 @@ class RegisterContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0),
                 child: Column(
+                  //logo and bharat mystery text
                   children: [
+                    //logo bharat mystery
                     Container(
                       child: Image.asset('assets/images/logo.png'),
                     ),
+                    //text bharat mystery
                     Text(
                       "Bharat Mystery",
                       style: TextStyle(
@@ -52,6 +55,7 @@ class RegisterContent extends StatelessWidget {
                 ),
                 child: Column(
                   children: <Widget>[
+                    //register text
                     Padding(
                       padding: const EdgeInsets.only(top: 30.0),
                       child: Text(
@@ -66,6 +70,7 @@ class RegisterContent extends StatelessWidget {
                     SizedBox(
                       height: 30.0,
                     ),
+
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: Column(
@@ -88,6 +93,8 @@ class RegisterContent extends StatelessWidget {
                           SizedBox(
                             height: 20.0,
                           ),
+
+                          //email
                           TextField(
                             autocorrect: false,
                             autofocus: false,
@@ -106,6 +113,8 @@ class RegisterContent extends StatelessWidget {
                           SizedBox(
                             height: 20.0,
                           ),
+
+                          //password
                           TextField(
                             autocorrect: false,
                             autofocus: false,
@@ -120,17 +129,19 @@ class RegisterContent extends StatelessWidget {
                                 fillColor: Colors.grey[200],
                                 filled: true,
                                 contentPadding: EdgeInsets.all(20.0)),
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.visiblePassword,
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
+
+                            //already have an account login --useless
                             children: [
                               Padding(
                                 padding: const EdgeInsets.only(right: 10.0),
-                                child: FlatButton(
+                                child: TextButton(
                                   onPressed: () {
                                     Navigator.pushReplacement(
                                         context,
@@ -155,6 +166,8 @@ class RegisterContent extends StatelessWidget {
                     SizedBox(
                       height: 8.0,
                     ),
+
+                    //register button
                     MaterialButton(
                       onPressed: () {},
                       height: 50.0,
