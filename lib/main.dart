@@ -1,9 +1,8 @@
-import 'package:bharat_mystery/screens/monument.dart';
+import 'package:bharat_mystery/screens/homepage.dart';
 import 'package:flutter/material.dart';
-import 'screens/login_screen.dart';
+import 'screens/login.dart';
 import 'screens/register_screen.dart';
 import 'screens/auth_screen.dart';
-import 'screens/map.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -25,14 +24,13 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
-        initialRoute: '/',
+        initialRoute: '/auth-screen',
         routes: {
           '/': (_) => Wrapper(),
-          '/auth-screen': (_) => AuthScreen(),
           '/login-page': (_) => LoginPage(),
+          '/auth-screen': (_) => AuthScreen(),
           '/register-page': (_) => RegisterPage(),
-          '/map': (_) => Map(),
-          '/monument': (_) => Monument(),
+          '/home-page': (_) => HomePage(),
         });
   }
 }

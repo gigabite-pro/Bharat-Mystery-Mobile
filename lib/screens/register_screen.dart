@@ -1,4 +1,4 @@
-import 'package:bharat_mystery/screens/login_screen.dart';
+import 'package:bharat_mystery/screens/login.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -30,7 +30,7 @@ class RegisterContent extends StatelessWidget {
                   children: [
                     //logo bharat mystery
                     Container(
-                      child: Image.asset('assets/images/logo.png'),
+                      child: Image.network('https://i.imgur.com/W0fE4FL.png'),
                     ),
                     //text bharat mystery
                     Text(
@@ -152,9 +152,9 @@ class RegisterContent extends StatelessWidget {
                                   child: Text(
                                     "Already have an account? Login",
                                     style: TextStyle(
-                                      fontFamily: 'LexendDeca',
-                                      fontSize: 14.0,
-                                    ),
+                                        fontFamily: 'LexendDeca',
+                                        fontSize: 14.0,
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),

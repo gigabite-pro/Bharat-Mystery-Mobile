@@ -1,65 +1,52 @@
-import 'package:bharat_mystery/screens/monument.dart' as Monument;
-import 'package:bharat_mystery/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:bharat_mystery/screens/register_screen.dart';
+import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
 
-//statefull widget
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: LoginContent());
-  }
-}
-
-class LoginContent extends StatefulWidget {
-  @override
-  _LoginContentState createState() => _LoginContentState();
-}
-
-class _LoginContentState extends State<LoginContent> {
   String _loginEmail, _loginPassword;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+    return MaterialApp(
+      home: Scaffold(
+        body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              //bharat mystery text and logo--useless
               Padding(
-                padding: const EdgeInsets.only(bottom: 40.0),
-                child: Column(
-                  children: [
-                    Container(
-                      child: Image.asset('assets/images/logo.png'),
-                    ),
-                    Text(
-                      "Bharat Mystery",
-                      style: TextStyle(
+                padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 70.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: Image.network('https://i.imgur.com/W0fE4FL.png'),
+                      ),
+                      Text(
+                        "Bharat Mystery",
+                        style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 30.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              //bharat mystery text ends.
-
               Container(
-                //other ui--useless
-                height: MediaQuery.of(context).size.height * 0.55,
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(
                   color: Color(0xffA0E7E5),
                   borderRadius: BorderRadius.only(
@@ -67,12 +54,11 @@ class _LoginContentState extends State<LoginContent> {
                     topRight: Radius.circular(50.0),
                   ),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    //login text--useless
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
-                      child: Text(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
                         "Login",
                         style: TextStyle(
                           fontFamily: 'LexendDeca',
@@ -80,14 +66,10 @@ class _LoginContentState extends State<LoginContent> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Form(
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      Form(
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
@@ -97,7 +79,7 @@ class _LoginContentState extends State<LoginContent> {
                               autofocus: false,
                               validator: (input) {
                                 if (input.isEmpty) {
-                                  return 'please provide an email';
+                                  return 'Please provide an email';
                                 }
                                 return null;
                               },
@@ -124,9 +106,9 @@ class _LoginContentState extends State<LoginContent> {
                               autofocus: false,
                               validator: (input) {
                                 if (input.isEmpty) {
-                                  return 'please provide a password';
+                                  return 'Please provide a password';
                                 } else if (input.length < 6) {
-                                  return 'your password needs to be atleast 6 digits';
+                                  return 'Password needs to be atleast 6 digits';
                                 }
                                 return null;
                               },
@@ -164,9 +146,13 @@ class _LoginContentState extends State<LoginContent> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
 
                             //don't have an account register.--useless
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 //change page to register.--useless
                                 TextButton(
@@ -182,37 +168,35 @@ class _LoginContentState extends State<LoginContent> {
                                   child: Text(
                                     "Don't have an account? Register",
                                     style: TextStyle(
-                                      fontFamily: "LexendDeca",
-                                      fontSize: 14.0,
-                                    ),
+                                        fontFamily: "LexendDeca",
+                                        fontSize: 14.0,
+                                        color: Colors.black),
                                   ),
                                 )
                               ],
                             ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            MaterialButton(
+                              onPressed: signIn,
+                              height: 50.0,
+                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              shape: StadiumBorder(),
+                              child: Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontFamily: 'LexendDeca',
+                                    fontSize: 16.0,
+                                    color: Colors.white),
+                              ),
+                              color: Colors.black,
+                            ),
                           ],
                         ),
                       ),
-                    ),
-
-                    //login button
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    MaterialButton(
-                      onPressed: signIn,
-                      height: 50.0,
-                      padding: EdgeInsets.symmetric(horizontal: 40.0),
-                      shape: StadiumBorder(),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                            fontFamily: 'LexendDeca',
-                            fontSize: 16.0,
-                            color: Colors.white),
-                      ),
-                      color: Colors.black,
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -234,14 +218,14 @@ class _LoginContentState extends State<LoginContent> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => Monument.Monument(),
+              builder: (context) => HomePage.HomePage(),
             ));
         _loginEmail = null;
         _loginPassword = null;
       } catch (e) {
         print("some shit happened in login screen heres a report " + e.message);
         Fluttertoast.showToast(
-            msg: 'please check your email and password again',
+            msg: 'Incorrect Email or Password',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1);

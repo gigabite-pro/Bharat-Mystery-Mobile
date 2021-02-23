@@ -23,7 +23,7 @@ class AuthScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: Image.asset('assets/images/logo.png'),
+                      child: Image.network('https://i.imgur.com/W0fE4FL.png'),
                     ),
                     SizedBox(
                       height: 30.0,

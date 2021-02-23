@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import "package:flutter_tts/flutter_tts.dart";
@@ -9,21 +8,8 @@ class Monument extends StatefulWidget {
   _MonumentState createState() => _MonumentState();
 }
 
-class _MonumentState extends State<Monument> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MonumentContent(),
-    );
-  }
-}
-
-class MonumentContent extends StatefulWidget {
-  @override
-  _MonumentContentState createState() => _MonumentContentState();
-}
-
-class _MonumentContentState extends State<MonumentContent> {
+class _MonumentState extends State<Monument>
+    with AutomaticKeepAliveClientMixin {
   final FlutterTts flutterTts = FlutterTts();
   Icon icon = Icon(Icons.volume_up, color: Colors.black);
   bool isSpeaking = false;
@@ -48,6 +34,7 @@ class _MonumentContentState extends State<MonumentContent> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -171,30 +158,10 @@ class _MonumentContentState extends State<MonumentContent> {
           ),
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Color(0xffA0E7E5),
-        animationDuration: Duration(milliseconds: 1000),
-        animationCurve: Curves.fastLinearToSlowEaseIn,
-        height: 52.0,
-        items: <Widget>[
-          Icon(
-            Icons.info,
-            size: 30.0,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.location_on,
-            size: 20.0,
-            color: Colors.black,
-          ),
-          Icon(
-            Icons.settings,
-            size: 20.0,
-            color: Colors.black,
-          ),
-        ],
-        onTap: (index) {},
-      ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
