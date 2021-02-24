@@ -27,7 +27,6 @@ class _HomePageState extends State<HomePage> {
               ),
               TextButton(
                 onPressed: () => SystemNavigator.pop(),
-                /*Navigator.of(context).pop(true)*/
                 child: Text('Yes'),
               ),
             ],
@@ -38,10 +37,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //exit app on back pressed
     return WillPopScope(onWillPop: _onWillPop, child: Home());
-    //return MaterialApp(
-    //  home: Home(),
-    //);
   }
 }
 
