@@ -1,5 +1,10 @@
 import 'package:bharat_mystery/screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -7,13 +12,13 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: RegisterContent());
-  }
-}
+  String _registerName, _registerEmail, _registerPassword;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  bool _passwordVisible = true;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-class RegisterContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,10 +28,10 @@ class RegisterContent extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
+              //logo and bharat mystery text
               Padding(
                 padding: const EdgeInsets.only(bottom: 30.0),
                 child: Column(
-                  //logo and bharat mystery text
                   children: [
                     //logo bharat mystery
                     Container(
@@ -73,94 +78,133 @@ class RegisterContent extends StatelessWidget {
 
                     Container(
                       width: MediaQuery.of(context).size.width * 0.8,
-                      child: Column(
-                        children: <Widget>[
-                          TextField(
-                            autocorrect: false,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                                hintText: "Name",
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[50]),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                fillColor: Colors.grey[200],
-                                filled: true,
-                                contentPadding: EdgeInsets.all(20.0)),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            //name
+                            TextFormField(
+                              autocorrect: false,
+                              autofocus: false,
+                              onSaved: (input) => _registerName = input,
+                              validator: (input) {
+                                if (input.isEmpty) {
+                                  return 'Please provide an name';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                  hintText: "Name",
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[50]),
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  fillColor: Colors.grey[200],
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20.0)),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
 
-                          //email
-                          TextField(
-                            autocorrect: false,
-                            autofocus: false,
-                            decoration: InputDecoration(
-                                hintText: "Email",
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[50]),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                fillColor: Colors.grey[200],
-                                filled: true,
-                                contentPadding: EdgeInsets.all(20.0)),
-                            keyboardType: TextInputType.emailAddress,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
+                            //email
+                            TextFormField(
+                              autocorrect: false,
+                              autofocus: false,
+                              validator: (input) {
+                                if (input.isEmpty) {
+                                  return 'Please provide an email';
+                                }
+                                return null;
+                              },
+                              onSaved: (input) => _registerEmail = input,
+                              decoration: InputDecoration(
+                                  hintText: "Email",
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[50]),
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  fillColor: Colors.grey[200],
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20.0)),
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
 
-                          //password
-                          TextField(
-                            autocorrect: false,
-                            autofocus: false,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                hintText: "Password",
-                                border: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.grey[50]),
-                                  borderRadius: BorderRadius.circular(30.0),
-                                ),
-                                fillColor: Colors.grey[200],
-                                filled: true,
-                                contentPadding: EdgeInsets.all(20.0)),
-                            keyboardType: TextInputType.visiblePassword,
-                          ),
-                          SizedBox(
-                            height: 10.0,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            //password
+                            TextFormField(
+                              autocorrect: false,
+                              autofocus: false,
+                              validator: (input) {
+                                if (input.isEmpty) {
+                                  return 'Please provide a password';
+                                } else if (input.length < 6) {
+                                  return 'Password needs to be atleast 6 digits';
+                                }
+                                return null;
+                              },
+                              onSaved: (input) => _registerPassword = input,
+                              obscureText: this._passwordVisible,
+                              decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      Icons.remove_red_eye,
+                                      color: this._passwordVisible
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      setState(() => this._passwordVisible =
+                                          !this._passwordVisible);
+                                    },
+                                  ),
+                                  hintText: "Password",
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.grey[50]),
+                                    borderRadius: BorderRadius.circular(30.0),
+                                  ),
+                                  fillColor: Colors.grey[200],
+                                  filled: true,
+                                  contentPadding: EdgeInsets.all(20.0)),
+                              keyboardType: TextInputType.visiblePassword,
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
 
                             //already have an account login --useless
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 10.0),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) =>
-                                                LoginPage()));
-                                  },
-                                  child: Text(
-                                    "Already have an account? Login",
-                                    style: TextStyle(
-                                        fontFamily: 'LexendDeca',
-                                        fontSize: 14.0,
-                                        color: Colors.black),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10.0),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  LoginPage()));
+                                    },
+                                    child: Text(
+                                      "Already have an account? Login",
+                                      style: TextStyle(
+                                          fontFamily: 'LexendDeca',
+                                          fontSize: 14.0,
+                                          color: Colors.black),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
-                        ],
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -169,7 +213,7 @@ class RegisterContent extends StatelessWidget {
 
                     //register button
                     MaterialButton(
-                      onPressed: () {},
+                      onPressed: registerUser,
                       height: 50.0,
                       padding: EdgeInsets.symmetric(horizontal: 40.0),
                       shape: StadiumBorder(),
@@ -190,5 +234,58 @@ class RegisterContent extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> registerUser() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      //Register FIREBASE AUTH and send email verification
+      try {
+        //create a user.
+        User user = (await auth.createUserWithEmailAndPassword(
+                email: _registerEmail, password: _registerPassword))
+            .user;
+
+        //user verification by email
+        user.sendEmailVerification();
+
+        //get current date and time
+        DateTime now = DateTime.now();
+        String _formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
+
+        //create a map with name email and registration date
+        Map<String, dynamic> userData = {
+          "name": this._registerName,
+          "email": this._registerEmail,
+          "registered_On": _formattedDate
+        };
+        //upload the map
+        users.doc(user.uid).set(userData);
+        Fluttertoast.showToast(
+            msg: "email verification send, please verify " + _registerName);
+        _registerEmail = null;
+        _registerPassword = null;
+        _registerName = null;
+        Fluttertoast.showToast(
+            msg: 'Registered successfully, please login',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1);
+        //change user screen so that he can login
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => LoginPage(),
+            ));
+      } catch (e) {
+        print("some shit happened in login screen heres a report " + e.message);
+        Fluttertoast.showToast(
+            msg: 'Registeration Failed, please try again',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1);
+      }
+    }
   }
 }

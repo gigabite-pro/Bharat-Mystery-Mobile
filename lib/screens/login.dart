@@ -13,6 +13,7 @@ class _LoginPageState extends State<LoginPage> {
   String _loginEmail, _loginPassword;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
+              //bharat mystery logo and image
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 70.0),
                 child: Container(
@@ -58,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
                   child: Column(
                     children: <Widget>[
+                      //login text
                       Text(
                         "Login",
                         style: TextStyle(
@@ -112,8 +115,20 @@ class _LoginPageState extends State<LoginPage> {
                                 }
                                 return null;
                               },
-                              obscureText: true,
+                              obscureText: this._passwordVisible,
                               decoration: InputDecoration(
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      Icons.remove_red_eye,
+                                      color: this._passwordVisible
+                                          ? Colors.blue
+                                          : Colors.grey,
+                                    ),
+                                    onPressed: () {
+                                      setState(() => this._passwordVisible =
+                                          !this._passwordVisible);
+                                    },
+                                  ),
                                   hintText: "Password",
                                   border: OutlineInputBorder(
                                     borderSide:

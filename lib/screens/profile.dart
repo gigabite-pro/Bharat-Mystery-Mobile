@@ -32,7 +32,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                 height: 20.0,
               ),
               MaterialButton(
-                onPressed: () {},
+                onPressed: logout_user,
                 height: 50.0,
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 shape: StadiumBorder(),
@@ -52,7 +52,10 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     );
   }
 
+  Future<void> logout_user() async {
+    //TODO: logout user
+  }
   @override
-  // TODO: implement wantKeepAlive
+  //TODO: implement want Keep Alive
   bool get wantKeepAlive => true;
 }
