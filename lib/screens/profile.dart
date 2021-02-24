@@ -1,4 +1,3 @@
-import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,6 +54,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     );
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> logout_user() async {
     //TODO: logout user
     final prefs = await SharedPreferences.getInstance();

@@ -6,6 +6,7 @@ import 'screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: avoid_init_to_null
 String uid = null;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
