@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register_screen.dart';
-import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgotPage extends StatefulWidget {
   @override
@@ -164,7 +162,7 @@ class _ForgotPageState extends State<ForgotPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      //Forgot Password -changed email
+      //Forgot Password
       try {
         auth.sendPasswordResetEmail(email: this._forgotEmail);
         Fluttertoast.showToast(
