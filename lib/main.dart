@@ -4,10 +4,14 @@ import 'screens/login.dart';
 import 'screens/register_screen.dart';
 import 'screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+String uid = null;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  final prefs = await SharedPreferences.getInstance();
+  uid = prefs.getString('GLOBAL_USER_DATA');
   runApp(MyApp());
 }
 
@@ -24,7 +28,7 @@ class _MyAppState extends State<MyApp> {
         theme: ThemeData(
           primarySwatch: Colors.lightBlue,
         ),
-        initialRoute: '/auth-screen',
+        initialRoute: '/',
         routes: {
           '/': (_) => Wrapper(),
           '/login-page': (_) => LoginPage(),
@@ -39,6 +43,9 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //On App start, if user logged in, show Monuments page, else show AuthScreen
+    if (uid != null) {
+      return HomePage();
+    }
     return AuthScreen();
   }
 }

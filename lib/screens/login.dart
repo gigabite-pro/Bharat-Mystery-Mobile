@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register_screen.dart';
 import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -227,8 +228,11 @@ class _LoginPageState extends State<LoginPage> {
       formState.save();
       //LOGIN FIREBASE AUTH
       try {
-        await auth.signInWithEmailAndPassword(
-            email: _loginEmail, password: _loginPassword);
+        User user = (await auth.signInWithEmailAndPassword(
+                email: _loginEmail, password: _loginPassword))
+            .user;
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('GLOBAL_USER_DATA', user.uid);
         //navigate to a new screen --change the screen below
         Navigator.pushReplacement(
             context,

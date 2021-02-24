@@ -1,4 +1,7 @@
+import 'package:bharat_mystery/main.dart';
+import 'package:bharat_mystery/screens/auth_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -54,7 +57,15 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
 
   Future<void> logout_user() async {
     //TODO: logout user
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('GLOBAL_USER_DATA', null);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AuthScreen(),
+        ));
   }
+
   @override
   //TODO: implement want Keep Alive
   bool get wantKeepAlive => true;
