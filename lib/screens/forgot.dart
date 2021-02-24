@@ -1,21 +1,18 @@
-import 'package:bharat_mystery/screens/forgot.dart';
+import 'package:bharat_mystery/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register_screen.dart';
-import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
-import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginPage extends StatefulWidget {
+class ForgotPage extends StatefulWidget {
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPageState createState() => _ForgotPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String _loginEmail, _loginPassword;
+class _ForgotPageState extends State<ForgotPage> {
+  String _forgotEmail;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
-  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       //login text
                       Text(
-                        "Login",
+                        "Forgot Page",
                         style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 25.0,
@@ -98,84 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                                   fillColor: Colors.grey[200],
                                   filled: true,
                                   contentPadding: EdgeInsets.all(20.0)),
-                              onSaved: (input) => _loginEmail = input,
+                              onSaved: (input) => this._forgotEmail = input,
                               keyboardType: TextInputType.emailAddress,
                             ),
                             SizedBox(
                               height: 20.0,
-                            ),
-
-                            //textfield password
-                            TextFormField(
-                              autocorrect: false,
-                              autofocus: false,
-                              validator: (input) {
-                                if (input.isEmpty) {
-                                  return 'Please provide a password';
-                                } else if (input.length < 6) {
-                                  return 'Password needs to be atleast 6 digits';
-                                }
-                                return null;
-                              },
-                              obscureText: this._passwordVisible,
-                              decoration: InputDecoration(
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      Icons.remove_red_eye,
-                                      color: this._passwordVisible
-                                          ? Colors.blue
-                                          : Colors.grey,
-                                    ),
-                                    onPressed: () {
-                                      setState(() => this._passwordVisible =
-                                          !this._passwordVisible);
-                                    },
-                                  ),
-                                  hintText: "Password",
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.grey[50]),
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ),
-                                  fillColor: Colors.grey[200],
-                                  filled: true,
-                                  contentPadding: EdgeInsets.all(20.0)),
-                              onSaved: (input) => _loginPassword = input,
-                              keyboardType: TextInputType.visiblePassword,
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-
-                            //forgot password--useless
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (BuildContext context) =>
-                                              ForgotPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      "Forgot Password?",
-                                      style: TextStyle(
-                                        fontFamily: 'LexendDeca',
-                                        fontSize: 13.0,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.0,
                             ),
 
                             //don't have an account register.--useless
@@ -207,12 +131,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 15.0,
                             ),
                             MaterialButton(
-                              onPressed: signIn,
+                              onPressed: forgotPassword,
                               height: 50.0,
                               padding: EdgeInsets.symmetric(horizontal: 40.0),
                               shape: StadiumBorder(),
                               child: Text(
-                                "Login",
+                                "Submit",
                                 style: TextStyle(
                                     fontFamily: 'LexendDeca',
                                     fontSize: 16.0,
@@ -234,29 +158,29 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> signIn() async {
+  Future<void> forgotPassword() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      //LOGIN FIREBASE AUTH
+      //Forgot Password
       try {
-        User user = (await auth.signInWithEmailAndPassword(
-                email: _loginEmail, password: _loginPassword))
-            .user;
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('GLOBAL_USER_DATA', user.uid);
+        auth.sendPasswordResetEmail(email: this._forgotEmail);
+        Fluttertoast.showToast(
+            msg:
+                'a forgot password email has been sent, please reset your password through it.',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1);
         //navigate to a new screen --change the screen below
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage.HomePage(),
+              builder: (context) => LoginPage(),
             ));
-        _loginEmail = null;
-        _loginPassword = null;
+        _forgotEmail = null;
       } catch (e) {
-        print("some shit happened in login screen heres a report " + e.message);
         Fluttertoast.showToast(
-            msg: 'Incorrect Email or Password',
+            msg: 'Incorrect Email or Email does not have an account',
             toastLength: Toast.LENGTH_SHORT,
             gravity: ToastGravity.BOTTOM,
             timeInSecForIosWeb: 1);
