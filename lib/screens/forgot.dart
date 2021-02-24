@@ -164,7 +164,7 @@ class _ForgotPageState extends State<ForgotPage> {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
-      //LOGIN FIREBASE AUTH
+      //Forgot Password
       try {
         auth.sendPasswordResetEmail(email: this._forgotEmail);
         Fluttertoast.showToast(
