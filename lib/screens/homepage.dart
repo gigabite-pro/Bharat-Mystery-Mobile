@@ -3,18 +3,45 @@ import 'package:bharat_mystery/screens/profile.dart';
 import 'package:bharat_mystery/screens/selectMonument.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/services.dart';
 
 class HomePage extends StatefulWidget {
+  HomePage({Key pagekey, this.title}) : super(key: pagekey);
+  final String title;
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<bool> _onWillPop() {
+    return showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Are you sure?'),
+            content: Text('Do you want to exit an App'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text('No'),
+              ),
+              TextButton(
+                onPressed: () => SystemNavigator.pop(),
+                /*Navigator.of(context).pop(true)*/
+                child: Text('Yes'),
+              ),
+            ],
+          ),
+        ) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Home(),
-    );
+    return WillPopScope(onWillPop: _onWillPop, child: Home());
+    //return MaterialApp(
+    //  home: Home(),
+    //);
   }
 }
 
