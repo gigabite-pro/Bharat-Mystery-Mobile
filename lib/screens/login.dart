@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register_screen.dart';
 import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -33,7 +34,11 @@ class _LoginPageState extends State<LoginPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Container(
-                        child: Image.network('https://i.imgur.com/W0fE4FL.png'),
+                        child: CachedNetworkImage(
+                          imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                        ),
                       ),
                       Text(
                         "Bharat Mystery",
