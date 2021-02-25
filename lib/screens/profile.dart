@@ -36,56 +36,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     });
   }
 
-  // ignore: non_constant_identifier_names
-  Future<void> logout_user() async {
-    //TODO: logout user
-    //get user's verification status
-    Future<String> getUserVerified() async {
-      String _verfy;
-      User user = FirebaseAuth.instance.currentUser;
-      if (user.emailVerified == true) {
-        _verfy = "Verified";
-        senvermail = false;
-      } else {
-        _verfy = "Not Verified";
-        senvermail = true;
-      }
-      return _verfy;
-    }
-
-    // get's user's name.
-    Future<String> getUserName() async {
-      String _username;
-      final prefs = await SharedPreferences.getInstance();
-      uid = prefs.getString('GLOBAL_USER_DATA');
-      await users.doc(uid.toString()).get().then((documentSnapshot) {
-        _username = documentSnapshot.data()['name'].toString();
-      });
-      return _username;
-    }
-
-    //logs user's out
-    Future<void> logoutUser() async {
-      //logout user
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('GLOBAL_USER_DATA', null);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => AuthScreen(),
-          ));
-    }
-
-    //send user verification mail
-    Future<void> sendUserVerificationMail() async {
-      User user = FirebaseAuth.instance.currentUser;
-      user.sendEmailVerification().catchError((e) {
-        Fluttertoast.showToast(msg: "verification mail failed to be sent");
-      });
-      Fluttertoast.showToast(msg: "verification mail sent");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -152,6 +102,52 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
         ),
       ),
     );
+  }
+
+  //get user's verification status
+  Future<String> getUserVerified() async {
+    String _verfy;
+    User user = FirebaseAuth.instance.currentUser;
+    if (user.emailVerified == true) {
+      _verfy = "Verified";
+      senvermail = false;
+    } else {
+      _verfy = "Not Verified";
+      senvermail = true;
+    }
+    return _verfy;
+  }
+
+  // get's user's name.
+  Future<String> getUserName() async {
+    String _username;
+    final prefs = await SharedPreferences.getInstance();
+    uid = prefs.getString('GLOBAL_USER_DATA');
+    await users.doc(uid.toString()).get().then((documentSnapshot) {
+      _username = documentSnapshot.data()['name'].toString();
+    });
+    return _username;
+  }
+
+  //logs user's out
+  Future<void> logoutUser() async {
+    //logout user
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('GLOBAL_USER_DATA', null);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AuthScreen(),
+        ));
+  }
+
+  //send user verification mail
+  Future<void> sendUserVerificationMail() async {
+    User user = FirebaseAuth.instance.currentUser;
+    user.sendEmailVerification().catchError((e) {
+      Fluttertoast.showToast(msg: "verification mail failed to be sent");
+    });
+    Fluttertoast.showToast(msg: "verification mail sent");
   }
 
   @override
