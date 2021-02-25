@@ -14,6 +14,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   String uid, userName = "user", verified = "not verified";
+  bool senvermail = true;
   @override
   void initState() {
     super.initState();
@@ -32,7 +33,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
         verified = value;
       });
     });
-    print(verified);
   }
 
   @override
@@ -68,15 +68,17 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              TextButton(
-                  onPressed: sendUserVerificationMail,
-                  child: Text(
-                    "Send verification mail again?",
-                    style: TextStyle(
-                        fontFamily: 'LexendDeca',
-                        fontSize: 14.0,
-                        color: Colors.black),
-                  )),
+              Visibility(
+                  visible: senvermail,
+                  child: TextButton(
+                      onPressed: sendUserVerificationMail,
+                      child: Text(
+                        "Send verification mail again?",
+                        style: TextStyle(
+                            fontFamily: 'LexendDeca',
+                            fontSize: 14.0,
+                            color: Colors.black),
+                      ))),
               SizedBox(
                 height: 20.0,
               ),
@@ -107,8 +109,10 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     User user = FirebaseAuth.instance.currentUser;
     if (user.emailVerified == true) {
       _verfy = "Verified";
+      senvermail = false;
     } else {
       _verfy = "Not Verified";
+      senvermail = true;
     }
     return _verfy;
   }
@@ -120,7 +124,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     uid = prefs.getString('GLOBAL_USER_DATA');
     await users.doc(uid.toString()).get().then((documentSnapshot) {
       _username = documentSnapshot.data()['name'].toString();
-      print(_username);
     });
     return _username;
   }
@@ -137,6 +140,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
         ));
   }
 
+  //send user verification mail
   Future<void> sendUserVerificationMail() async {
     User user = FirebaseAuth.instance.currentUser;
     user.sendEmailVerification().catchError((e) {
