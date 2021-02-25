@@ -78,11 +78,6 @@ class AuthScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextButton(
-                        child: Text("Temporary Button"),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/monument');
-                        })
                   ],
                 ),
               ),

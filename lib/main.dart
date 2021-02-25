@@ -37,7 +37,7 @@ class _MyAppState extends State<MyApp> {
           '/auth-screen': (_) => AuthScreen(),
           '/register-page': (_) => RegisterPage(),
           '/home-page': (_) => HomePage(),
-          '/forgot-password-page': (_) => ForgotPage()
+          '/forgot-password-page': (_) => ForgotPage(),
         });
   }
 }

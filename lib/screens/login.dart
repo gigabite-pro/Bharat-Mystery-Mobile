@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                               keyboardType: TextInputType.visiblePassword,
                             ),
                             SizedBox(
-                              height: 10.0,
+                              height: 5.0,
                             ),
 
                             //forgot password--useless
@@ -173,9 +173,6 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                 ),
                               ],
-                            ),
-                            SizedBox(
-                              height: 10.0,
                             ),
 
                             //don't have an account register.--useless
