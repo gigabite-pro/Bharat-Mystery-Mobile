@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                 height: 20.0,
               ),
               new Text(
-                "verification status: $verified",
+                "Verification Status: $verified",
                 style: TextStyle(
                   fontFamily: 'LexendDeca',
                   fontSize: 16.0,
