@@ -1,6 +1,7 @@
 import 'package:bharat_mystery/screens/login.dart';
 import 'package:bharat_mystery/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class AuthScreen extends StatelessWidget {
   @override
@@ -25,7 +26,11 @@ class AuthScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Container(
-                      child: Image.network('https://i.imgur.com/W0fE4FL.png'),
+                      child: CachedNetworkImage(
+                        imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                      ),
                     ),
                     SizedBox(
                       height: 30.0,

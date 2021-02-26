@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -34,7 +35,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     //logo bharat mystery
                     Container(
-                      child: Image.network('https://i.imgur.com/W0fE4FL.png'),
+                      child: CachedNetworkImage(
+                        imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                      ),
                     ),
                     //text bharat mystery
                     Text(

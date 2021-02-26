@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong/latlong.dart';
 import "package:flutter_tts/flutter_tts.dart";
 import 'package:http/http.dart' as http;
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Monument extends StatefulWidget {
   final int snumber;
@@ -132,7 +133,11 @@ class _MonumentContentState extends State<MonumentContent> {
                             ClipRRect(
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(25.0)),
-                              child: Image.network(result["image"].toString()),
+                              child: CachedNetworkImage(
+                                imageUrl: result["image"].toString(),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                              ),
                             ),
                             SizedBox(
                               height: 10.0,
