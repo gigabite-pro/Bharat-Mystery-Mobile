@@ -88,18 +88,22 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 20.0),
                     child: ListView.builder(
-                      itemCount: allmonuments.length,
+                      itemCount: allmonuments
+                          .length, // response from db <List of dicts>(json decoded)
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
                             leading: Icon(Icons.place),
-                            title: Text((allmonuments[index])["name"]),
+                            title: Text((allmonuments[index])[
+                                "name"]), // name property of indexed monument
                             onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Monument(
-                                  snumber: (allmonuments[index])["Snumber"],
-                                ),
-                              ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Monument(
+                                      snumber: (allmonuments[index])["Snumber"],
+                                    ),
+                                  ));
                             },
                           ),
                         );

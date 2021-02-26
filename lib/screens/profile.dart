@@ -1,4 +1,4 @@
-import 'package:bharat_mystery/screens/auth_screen.dart';
+import 'package:bharat_mystery/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -135,10 +135,11 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('GLOBAL_USER_DATA', null);
     Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => AuthScreen(),
-        ));
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => Wrapper(),
+      ),
+    );
   }
 
   //send user verification mail

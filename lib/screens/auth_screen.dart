@@ -1,3 +1,5 @@
+import 'package:bharat_mystery/screens/login.dart' as LoginPage;
+import 'package:bharat_mystery/screens/register_screen.dart' as RegisterPage;
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -51,7 +53,11 @@ class AuthScreen extends StatelessWidget {
                       elevation: 10.0,
                       shape: StadiumBorder(),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/register-page');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterPage.RegisterPage(),
+                            ));
                       },
                       color: Colors.black,
                       child: Text(
@@ -72,7 +78,11 @@ class AuthScreen extends StatelessWidget {
                       elevation: 10.0,
                       shape: StadiumBorder(),
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/login-page');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage.LoginPage(),
+                            ));
                       },
                       color: Colors.black,
                       child: Text(
