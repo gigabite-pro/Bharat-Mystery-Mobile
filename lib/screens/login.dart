@@ -2,7 +2,7 @@ import 'package:bharat_mystery/screens/forgot.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:bharat_mystery/screens/register_screen.dart';
+import 'package:bharat_mystery/screens/register.dart';
 import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -55,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.6,
+                height: MediaQuery.of(context).size.height * 0.62,
                 decoration: BoxDecoration(
                   color: Color(0xffA0E7E5),
                   borderRadius: BorderRadius.only(

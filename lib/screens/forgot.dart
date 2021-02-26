@@ -2,7 +2,7 @@ import 'package:bharat_mystery/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:bharat_mystery/screens/register_screen.dart';
+import 'package:bharat_mystery/screens/register.dart';
 
 class ForgotPage extends StatefulWidget {
   @override

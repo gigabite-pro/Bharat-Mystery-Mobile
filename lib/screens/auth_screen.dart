@@ -1,5 +1,5 @@
 import 'package:bharat_mystery/screens/login.dart';
-import 'package:bharat_mystery/screens/register_screen.dart';
+import 'package:bharat_mystery/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 

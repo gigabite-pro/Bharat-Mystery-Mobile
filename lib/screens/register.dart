@@ -21,40 +21,42 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
+    return MaterialApp(
+      home: Scaffold(
+        body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              //logo and bharat mystery text
+              //bharat mystery logo and image
               Padding(
-                padding: const EdgeInsets.only(bottom: 30.0),
-                child: Column(
-                  children: [
-                    //logo bharat mystery
-                    Container(
-                      child: CachedNetworkImage(
-                        imageUrl: "https://i.imgur.com/W0fE4FL.png",
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(),
+                padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 40.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        child: CachedNetworkImage(
+                          imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(),
+                        ),
                       ),
-                    ),
-                    //text bharat mystery
-                    Text(
-                      "Bharat Mystery",
-                      style: TextStyle(
+                      Text(
+                        "Bharat Mystery",
+                        style: TextStyle(
                           fontFamily: 'LexendDeca',
                           fontSize: 30.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.6,
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.7,
                 decoration: BoxDecoration(
                   color: Color(0xffA0E7E5),
                   borderRadius: BorderRadius.only(
@@ -62,12 +64,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     topRight: Radius.circular(50.0),
                   ),
                 ),
-                child: Column(
-                  children: <Widget>[
-                    //register text
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
-                      child: Text(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 10.0),
+                  child: Column(
+                    children: <Widget>[
+                      //register text
+                      Text(
                         "Register",
                         style: TextStyle(
                           fontFamily: 'LexendDeca',
@@ -75,14 +77,10 @@ class _RegisterPageState extends State<RegisterPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: Form(
+                      SizedBox(
+                        height: 25.0,
+                      ),
+                      Form(
                         key: _formKey,
                         child: Column(
                           children: <Widget>[
@@ -93,7 +91,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               onSaved: (input) => _registerName = input,
                               validator: (input) {
                                 if (input.isEmpty) {
-                                  return 'Please provide an name';
+                                  return 'Please provide a name';
                                 }
                                 return null;
                               },
@@ -185,52 +183,50 @@ class _RegisterPageState extends State<RegisterPage> {
                             //already have an account login --useless
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 10.0),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) =>
-                                                  LoginPage()));
-                                    },
-                                    child: Text(
-                                      "Already have an account? Login",
-                                      style: TextStyle(
-                                          fontFamily: 'LexendDeca',
-                                          fontSize: 14.0,
-                                          color: Colors.black),
-                                    ),
+                              children: <Widget>[
+                                //change page to register.--useless
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            LoginPage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Text(
+                                    "Already have an account? Login",
+                                    style: TextStyle(
+                                        fontFamily: "LexendDeca",
+                                        fontSize: 14.0,
+                                        color: Colors.black),
                                   ),
                                 ),
                               ],
-                            )
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            MaterialButton(
+                              onPressed: registerUser,
+                              height: 50.0,
+                              padding: EdgeInsets.symmetric(horizontal: 40.0),
+                              shape: StadiumBorder(),
+                              child: Text(
+                                "Register",
+                                style: TextStyle(
+                                    fontFamily: 'LexendDeca',
+                                    fontSize: 16.0,
+                                    color: Colors.white),
+                              ),
+                              color: Colors.black,
+                            ),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-
-                    //register button
-                    MaterialButton(
-                      onPressed: registerUser,
-                      height: 50.0,
-                      padding: EdgeInsets.symmetric(horizontal: 40.0),
-                      shape: StadiumBorder(),
-                      child: Text(
-                        "Register",
-                        style: TextStyle(
-                            fontFamily: 'LexendDeca',
-                            fontSize: 16.0,
-                            color: Colors.white),
-                      ),
-                      color: Colors.black,
-                    )
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

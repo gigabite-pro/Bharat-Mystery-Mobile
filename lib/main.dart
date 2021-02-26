@@ -2,7 +2,7 @@ import 'package:bharat_mystery/screens/homepage.dart';
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'screens/forgot.dart';
-import 'screens/register_screen.dart';
+import 'screens/register.dart';
 import 'screens/auth_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
