@@ -101,7 +101,7 @@ class _MonumentContentState extends State<MonumentContent> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Color(0xffA0E7E5),
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -214,7 +214,7 @@ class _MonumentContentState extends State<MonumentContent> {
                               splashColor: Colors.white,
                               padding: EdgeInsets.symmetric(horizontal: 35.0),
                               height: 30.0,
-                              elevation: 10.0,
+                              elevation: 5.0,
                               shape: StadiumBorder(),
                               onPressed: () {
                                 if (result["streetview"] == "") {
@@ -224,15 +224,16 @@ class _MonumentContentState extends State<MonumentContent> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1);
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            StreetView(
+                                          url: result["streetview"],
+                                        ),
+                                      ));
                                 }
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          StreetView(
-                                        url: result["streetview"],
-                                      ),
-                                    ));
                               },
                               color: Colors.black,
                               child: Text(

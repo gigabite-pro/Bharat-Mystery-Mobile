@@ -70,7 +70,7 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: Color(0xffA0E7E5),
               body: Center(child: CircularProgressIndicator()),
             );
           }
