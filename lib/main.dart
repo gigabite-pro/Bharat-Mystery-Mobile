@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //On App start, if user logged in, show Monuments page, else show AuthScreen
+    //On App start, if user logged in, show HomePage page, else show AuthScreen
     if (uid != null) {
       return HomePage();
     }

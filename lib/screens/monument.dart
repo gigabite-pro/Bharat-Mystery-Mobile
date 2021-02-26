@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:bharat_mystery/screens/streetview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:latlong/latlong.dart';
 import "package:flutter_tts/flutter_tts.dart";
 import 'package:http/http.dart' as http;
@@ -146,8 +148,18 @@ class _MonumentContentState extends State<MonumentContent> {
                               result["name"].toString(),
                               style: TextStyle(
                                   fontFamily: 'LexendDeca',
-                                  fontSize: 25.0,
+                                  fontSize: 24.0,
                                   fontWeight: FontWeight.w900),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Text(
+                              result["place"].toString(),
+                              style: TextStyle(
+                                  fontFamily: 'LexendDeca',
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500),
                             ),
                             SizedBox(
                               height: 15.0,
@@ -196,7 +208,43 @@ class _MonumentContentState extends State<MonumentContent> {
                               ),
                             ),
                             SizedBox(
-                              height: 15.0,
+                              height: 10.0,
+                            ),
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 10.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                if (result["streetview"] == "") {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Street View not available for this monument',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1);
+                                }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          StreetView(
+                                        url: result["streetview"],
+                                      ),
+                                    ));
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Open Street View",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.0,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -253,7 +301,7 @@ class _MonumentContentState extends State<MonumentContent> {
                       padding: EdgeInsets.symmetric(horizontal: 40.0),
                       shape: StadiumBorder(),
                       child: Text(
-                        "Select Monument",
+                        "Back",
                         style: TextStyle(
                             fontFamily: 'LexendDeca',
                             fontSize: 16.0,
