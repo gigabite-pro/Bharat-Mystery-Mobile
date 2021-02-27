@@ -1,4 +1,5 @@
 import 'package:bharat_mystery/main.dart';
+import 'package:bharat_mystery/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -137,7 +138,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (BuildContext context) => Wrapper(),
+        builder: (BuildContext context) => LoginPage(),
       ),
     );
   }
