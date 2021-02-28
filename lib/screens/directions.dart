@@ -39,9 +39,6 @@ class _DirectionsState extends State<Directions> {
             }
 
             final result = snapshot.data;
-            print(result);
-            print(widget.elong);
-            print(widget.elat);
 
             return Scaffold(
               body: WebView(
