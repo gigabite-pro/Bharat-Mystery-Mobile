@@ -248,11 +248,11 @@ class _LoginPageState extends State<LoginPage> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('GLOBAL_USER_DATA', user.uid);
         //navigate to a new screen --change the screen below
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage.HomePage(),
-            ));
+                builder: (BuildContext context) => HomePage.HomePage()),
+            (Route<dynamic> route) => false);
         _loginEmail = null;
         _loginPassword = null;
       } catch (e) {
