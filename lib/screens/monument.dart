@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bharat_mystery/screens/directions.dart';
 import 'package:bharat_mystery/screens/streetview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -204,6 +205,34 @@ class _MonumentContentState extends State<MonumentContent> {
                                       ),
                                     ],
                                   ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Directions(
+                                              elong: result["longitude"],
+                                              elat: result["latitude"]),
+                                    ));
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Get Directions",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
                                 ),
                               ),
                             ),
