@@ -1,4 +1,5 @@
 import 'package:bharat_mystery/screens/homepage.dart';
+import 'package:bharat_mystery/screens/selectMonument.dart';
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 import 'screens/forgot.dart';
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> {
           '/register-page': (_) => RegisterPage(),
           '/home-page': (_) => HomePage(),
           '/forgot-password-page': (_) => ForgotPage(),
+          '/select-monument': (_) => SelectMonument()
         });
   }
 }

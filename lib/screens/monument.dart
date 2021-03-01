@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:bharat_mystery/screens/directions.dart';
 import 'package:bharat_mystery/screens/streetview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:latlong/latlong.dart';
@@ -21,23 +20,10 @@ class Monument extends StatefulWidget {
 class _MonumentState extends State<Monument> {
   Future<bool> _onWillPop() {
     return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Are you sure?'),
-            content: Text('Do you want to exit the app?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text('No'),
-              ),
-              TextButton(
-                onPressed: () => SystemNavigator.pop(),
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
+        context: context,
+        builder: (context) {
+          Navigator.of(context).pop(true);
+        });
   }
 
   @override
