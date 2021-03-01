@@ -73,7 +73,7 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
               backgroundColor: Theme.of(context).focusColor,
               body: Center(
                   child: CircularProgressIndicator(
-                backgroundColor: Colors.black,
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
               )),
             );
           }
