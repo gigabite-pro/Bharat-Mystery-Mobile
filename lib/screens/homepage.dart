@@ -1,7 +1,9 @@
 import 'package:bharat_mystery/screens/profile.dart';
 import 'package:bharat_mystery/screens/selectMonument.dart';
+import 'package:bharat_mystery/screens/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,32 +23,41 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: PageView(
-          controller: _pageController,
-          children: _screens,
-          physics: NeverScrollableScrollPhysics(),
-        ),
-        bottomNavigationBar: CurvedNavigationBar(
-          onTap: _itemTapped,
-          backgroundColor: Color(0xffA0E7E5),
-          animationDuration: Duration(milliseconds: 1000),
-          animationCurve: Curves.fastLinearToSlowEaseIn,
-          height: 52.0,
-          items: <Widget>[
-            Icon(
-              Icons.info,
-              size: 20.0,
-              color: Colors.black,
+    return ChangeNotifierProvider(
+      create: (_) => ThemeNotifier(),
+      child: Consumer<ThemeNotifier>(
+        builder: (context, ThemeNotifier notifier, child) {
+          return MaterialApp(
+            theme: notifier.darkTheme ? dark : light,
+            home: Scaffold(
+              body: PageView(
+                controller: _pageController,
+                children: _screens,
+                physics: NeverScrollableScrollPhysics(),
+              ),
+              bottomNavigationBar: CurvedNavigationBar(
+                color: Theme.of(context).cardColor,
+                onTap: _itemTapped,
+                backgroundColor: Theme.of(context).focusColor,
+                animationDuration: Duration(milliseconds: 1000),
+                animationCurve: Curves.fastLinearToSlowEaseIn,
+                height: 52.0,
+                items: <Widget>[
+                  Icon(
+                    Icons.info,
+                    size: 20.0,
+                    color: Theme.of(context).highlightColor,
+                  ),
+                  Icon(
+                    Icons.settings,
+                    size: 20.0,
+                    color: Theme.of(context).highlightColor,
+                  ),
+                ],
+              ),
             ),
-            Icon(
-              Icons.settings,
-              size: 20.0,
-              color: Colors.black,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

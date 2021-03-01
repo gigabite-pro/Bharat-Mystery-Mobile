@@ -1,6 +1,7 @@
 import 'package:bharat_mystery/screens/forgot.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register.dart';
 import 'package:bharat_mystery/screens/homepage.dart' as HomePage;
@@ -20,36 +21,44 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               //bharat mystery logo and image
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 70.0),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        child: CachedNetworkImage(
-                          imageUrl: "https://i.imgur.com/W0fE4FL.png",
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(),
+              Container(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 70.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Container(
+                          child: CachedNetworkImage(
+                            imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                          ),
                         ),
-                      ),
-                      Text(
-                        "Bharat Mystery",
-                        style: TextStyle(
-                          fontFamily: 'LexendDeca',
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
+                        Text(
+                          "Bharat Mystery",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontFamily: 'LexendDeca',
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -57,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.62,
                 decoration: BoxDecoration(
-                  color: Color(0xffA0E7E5),
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50.0),
                     topRight: Radius.circular(50.0),
@@ -71,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       Text(
                         "Login",
                         style: TextStyle(
+                          color: Theme.of(context).highlightColor,
                           fontFamily: 'LexendDeca',
                           fontSize: 25.0,
                           fontWeight: FontWeight.bold,
@@ -173,7 +183,8 @@ class _LoginPageState extends State<LoginPage> {
                                       style: TextStyle(
                                           fontFamily: 'LexendDeca',
                                           fontSize: 13.0,
-                                          color: Colors.black),
+                                          color:
+                                              Theme.of(context).highlightColor),
                                     ),
                                   ),
                                 ),
@@ -200,7 +211,8 @@ class _LoginPageState extends State<LoginPage> {
                                     style: TextStyle(
                                         fontFamily: "LexendDeca",
                                         fontSize: 14.0,
-                                        color: Colors.black),
+                                        color:
+                                            Theme.of(context).highlightColor),
                                   ),
                                 )
                               ],
@@ -218,9 +230,9 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     fontFamily: 'LexendDeca',
                                     fontSize: 16.0,
-                                    color: Colors.white),
+                                    color: Theme.of(context).cardColor),
                               ),
-                              color: Colors.black,
+                              color: Theme.of(context).highlightColor,
                             ),
                           ],
                         ),

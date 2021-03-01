@@ -1,6 +1,7 @@
 import 'package:bharat_mystery/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:bharat_mystery/screens/register.dart';
 
@@ -16,6 +17,10 @@ class _ForgotPageState extends State<ForgotPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
@@ -49,7 +54,7 @@ class _ForgotPageState extends State<ForgotPage> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.6,
                 decoration: BoxDecoration(
-                  color: Color(0xffA0E7E5),
+                  color: Theme.of(context).accentColor,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(50.0),
                     topRight: Radius.circular(50.0),
@@ -63,10 +68,10 @@ class _ForgotPageState extends State<ForgotPage> {
                       Text(
                         "Forgot Page",
                         style: TextStyle(
-                          fontFamily: 'LexendDeca',
-                          fontSize: 25.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+                            fontFamily: 'LexendDeca',
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).highlightColor),
                       ),
                       SizedBox(
                         height: 25.0,
@@ -122,7 +127,8 @@ class _ForgotPageState extends State<ForgotPage> {
                                     style: TextStyle(
                                         fontFamily: "LexendDeca",
                                         fontSize: 14.0,
-                                        color: Colors.black),
+                                        color:
+                                            Theme.of(context).highlightColor),
                                   ),
                                 )
                               ],
@@ -140,9 +146,9 @@ class _ForgotPageState extends State<ForgotPage> {
                                 style: TextStyle(
                                     fontFamily: 'LexendDeca',
                                     fontSize: 16.0,
-                                    color: Colors.white),
+                                    color: Theme.of(context).cardColor),
                               ),
-                              color: Colors.black,
+                              color: Theme.of(context).highlightColor,
                             ),
                           ],
                         ),
