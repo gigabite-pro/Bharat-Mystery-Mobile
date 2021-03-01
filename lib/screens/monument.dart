@@ -8,6 +8,21 @@ import 'package:latlong/latlong.dart';
 import "package:flutter_tts/flutter_tts.dart";
 import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class MapUtils {
+  MapUtils._();
+
+  static Future<void> openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+}
 
 class Monument extends StatefulWidget {
   final int snumber;
@@ -119,6 +134,7 @@ class _MonumentContentState extends State<MonumentContent> {
                       child: SingleChildScrollView(
                         child: Column(
                           children: <Widget>[
+                            //image
                             ClipRRect(
                               borderRadius: BorderRadius.vertical(
                                   top: Radius.circular(25.0)),
@@ -131,6 +147,8 @@ class _MonumentContentState extends State<MonumentContent> {
                             SizedBox(
                               height: 10.0,
                             ),
+
+                            //text
                             Text(
                               result["name"].toString(),
                               style: TextStyle(
@@ -197,6 +215,8 @@ class _MonumentContentState extends State<MonumentContent> {
                             SizedBox(
                               height: 10.0,
                             ),
+
+                            //get directions button
                             MaterialButton(
                               splashColor: Colors.white,
                               padding: EdgeInsets.symmetric(horizontal: 35.0),
@@ -225,6 +245,8 @@ class _MonumentContentState extends State<MonumentContent> {
                             SizedBox(
                               height: 10.0,
                             ),
+
+                            //get street views
                             MaterialButton(
                               splashColor: Colors.white,
                               padding: EdgeInsets.symmetric(horizontal: 35.0),
@@ -253,6 +275,30 @@ class _MonumentContentState extends State<MonumentContent> {
                               color: Colors.black,
                               child: Text(
                                 "Open Street View",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+
+                            //drive using google maps
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                MapUtils.openMap(
+                                    result["latitude"], result["longitude"]);
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Drive there using Google-Maps",
                                 style: TextStyle(
                                   fontSize: 13.0,
                                   color: Colors.white,
