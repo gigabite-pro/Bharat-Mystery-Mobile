@@ -107,7 +107,7 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                       children: <Widget>[
                         Consumer<ThemeNotifier>(
                           builder: (context, notifier, child) => SwitchListTile(
-                            title: Text("Dark Mode 👉👉"),
+                            title: Text("Dark Mode"),
                             onChanged: (value) {
                               showDialog(
                                 context: context,

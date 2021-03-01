@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:bharat_mystery/screens/directions.dart';
+import 'package:bharat_mystery/screens/quiz.dart';
 import 'package:bharat_mystery/screens/streetview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -103,7 +104,7 @@ class _MonumentContentState extends State<MonumentContent> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xffA0E7E5),
+            backgroundColor: Theme.of(context).focusColor,
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -169,7 +170,45 @@ class _MonumentContentState extends State<MonumentContent> {
                                   fontWeight: FontWeight.w500),
                             ),
                             SizedBox(
-                              height: 15.0,
+                              height: 10.0,
+                            ),
+                            //get street views
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                if (result["streetview"] == "") {
+                                  Fluttertoast.showToast(
+                                      msg:
+                                          'Street View not available for this monument',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1);
+                                } else {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            StreetView(
+                                          url: result["streetview"],
+                                        ),
+                                      ));
+                                }
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Open Street View",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
                             ),
                             ClipRRect(
                               borderRadius: BorderRadius.circular(25.0),
@@ -244,48 +283,6 @@ class _MonumentContentState extends State<MonumentContent> {
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-
-                            //get street views
-                            MaterialButton(
-                              splashColor: Colors.white,
-                              padding: EdgeInsets.symmetric(horizontal: 35.0),
-                              height: 30.0,
-                              elevation: 5.0,
-                              shape: StadiumBorder(),
-                              onPressed: () {
-                                if (result["streetview"] == "") {
-                                  Fluttertoast.showToast(
-                                      msg:
-                                          'Street View not available for this monument',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.BOTTOM,
-                                      timeInSecForIosWeb: 1);
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (BuildContext context) =>
-                                            StreetView(
-                                          url: result["streetview"],
-                                        ),
-                                      ));
-                                }
-                              },
-                              color: Colors.black,
-                              child: Text(
-                                "Open Street View",
-                                style: TextStyle(
-                                  fontSize: 13.0,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
 
                             //drive using google maps
                             MaterialButton(
@@ -336,6 +333,30 @@ class _MonumentContentState extends State<MonumentContent> {
                               endIndent: 40.0,
                               indent: 40.0,
                               color: Colors.black,
+                            ),
+                            // play quiz button
+                            MaterialButton(
+                              splashColor: Colors.white,
+                              padding: EdgeInsets.symmetric(horizontal: 35.0),
+                              height: 30.0,
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          Quiz(snumber: widget.snumber),
+                                    ));
+                              },
+                              color: Colors.black,
+                              child: Text(
+                                "Play Quiz",
+                                style: TextStyle(
+                                  fontSize: 13.0,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                             FractionallySizedBox(
                               widthFactor: 0.9,
