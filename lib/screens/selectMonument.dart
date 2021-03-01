@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bharat_mystery/screens/monument.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
@@ -16,23 +15,10 @@ class _SelectMonumentState extends State<SelectMonument>
     with AutomaticKeepAliveClientMixin {
   Future<bool> _onWillPop() {
     return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Are you sure?'),
-            content: Text('Do you want to exit the app?'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text('No'),
-              ),
-              TextButton(
-                onPressed: () => SystemNavigator.pop(),
-                child: Text('Yes'),
-              ),
-            ],
-          ),
-        ) ??
-        false;
+        context: context,
+        builder: (context) {
+          Navigator.popAndPushNamed(context, '/home-page');
+        });
   }
 
   @override
