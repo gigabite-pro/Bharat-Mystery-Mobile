@@ -157,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     icon: Icon(
                                       Icons.remove_red_eye,
                                       color: this._passwordVisible
-                                          ? Colors.blue
+                                          ? Colors.black
                                           : Colors.grey,
                                     ),
                                     onPressed: () {

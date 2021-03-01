@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                                     icon: Icon(
                                       Icons.remove_red_eye,
                                       color: this._passwordVisible
-                                          ? Colors.blue
+                                          ? Colors.black
                                           : Colors.grey,
                                     ),
                                     onPressed: () {
@@ -160,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: const EdgeInsets.only(right: 10.0),
                                   child: TextButton(
                                     onPressed: () {
-                                      Navigator.pushReplacement(
+                                      Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
@@ -171,9 +171,9 @@ class _LoginPageState extends State<LoginPage> {
                                     child: Text(
                                       "Forgot Password?",
                                       style: TextStyle(
-                                        fontFamily: 'LexendDeca',
-                                        fontSize: 13.0,
-                                      ),
+                                          fontFamily: 'LexendDeca',
+                                          fontSize: 13.0,
+                                          color: Colors.black),
                                     ),
                                   ),
                                 ),
@@ -248,11 +248,11 @@ class _LoginPageState extends State<LoginPage> {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('GLOBAL_USER_DATA', user.uid);
         //navigate to a new screen --change the screen below
-        Navigator.pushReplacement(
+        Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => HomePage.HomePage(),
-            ));
+                builder: (BuildContext context) => HomePage.HomePage()),
+            (Route<dynamic> route) => false);
         _loginEmail = null;
         _loginPassword = null;
       } catch (e) {

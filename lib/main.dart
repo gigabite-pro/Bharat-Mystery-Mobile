@@ -47,8 +47,10 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     //On App start, if user logged in, show HomePage page, else show AuthScreen
     if (uid != null) {
+      print(uid);
       return HomePage();
     }
+    print(uid);
     return AuthScreen();
   }
 }

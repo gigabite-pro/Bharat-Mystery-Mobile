@@ -1,4 +1,3 @@
-import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -53,7 +53,7 @@ class AuthScreen extends StatelessWidget {
                       elevation: 10.0,
                       shape: StadiumBorder(),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) => RegisterPage(),
@@ -78,7 +78,7 @@ class AuthScreen extends StatelessWidget {
                       elevation: 10.0,
                       shape: StadiumBorder(),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (BuildContext context) => LoginPage(),
