@@ -1,3 +1,4 @@
+import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/login.dart';
 import 'package:bharat_mystery/screens/theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -98,19 +99,6 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                                 color: Theme.of(context).highlightColor),
                           ))),
 
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    "Dark Mode 👇👇",
-                    style: TextStyle(
-                      color: Theme.of(context).highlightColor,
-                      fontFamily: 'LexendDeca',
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
                   //switchlisttile switch
                   Padding(
                     padding: EdgeInsets.only(top: 20),
@@ -119,9 +107,35 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                       children: <Widget>[
                         Consumer<ThemeNotifier>(
                           builder: (context, notifier, child) => SwitchListTile(
-                            title: Text("Dark Mode"),
+                            title: Text("Dark Mode 👉👉"),
                             onChanged: (value) {
-                              notifier.toggleTheme();
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text('Are you sure?'),
+                                  content: Text('This will restart the app?'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(false),
+                                      child: Text('No'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => {
+                                        notifier.toggleTheme(),
+                                        Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        MyApp()),
+                                                (route) => false)
+                                      },
+                                      child: Text('Yes'),
+                                    ),
+                                  ],
+                                ),
+                              );
                             },
                             value: notifier.darkTheme,
                           ),

@@ -70,8 +70,11 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Scaffold(
-              backgroundColor: Theme.of(context).accentColor,
-              body: Center(child: CircularProgressIndicator()),
+              backgroundColor: Theme.of(context).focusColor,
+              body: Center(
+                  child: CircularProgressIndicator(
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.black),
+              )),
             );
           }
           final allmonuments = json.decode(snapshot.data);
