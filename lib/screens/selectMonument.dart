@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/monument.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -71,8 +70,11 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Scaffold(
-              backgroundColor: Theme.of(context).accentColor,
-              body: Center(child: CircularProgressIndicator()),
+              backgroundColor: Theme.of(context).focusColor,
+              body: Center(
+                  child: CircularProgressIndicator(
+                backgroundColor: Colors.black,
+              )),
             );
           }
           final allmonuments = json.decode(snapshot.data);
