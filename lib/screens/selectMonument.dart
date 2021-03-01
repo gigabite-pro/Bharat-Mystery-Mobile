@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/monument.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
