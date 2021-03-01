@@ -1,9 +1,12 @@
 import 'package:bharat_mystery/screens/login.dart';
+import 'package:bharat_mystery/screens/theme_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -38,67 +41,124 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+
     super.build(context);
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          color: Color(0xffA0E7E5),
+          color: Theme.of(context).cardColor,
         ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 300.0, 20.0, 0),
-          child: Column(
-            children: <Widget>[
-              new Text(
-                "Welcome $userName",
-                style: TextStyle(
-                  fontFamily: 'LexendDeca',
-                  fontSize: 25.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(
-                height: 20.0,
-              ),
-              new Text(
-                "Verification Status: $verified",
-                style: TextStyle(
-                  fontFamily: 'LexendDeca',
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Visibility(
-                  visible: senvermail,
-                  child: TextButton(
-                      onPressed: sendUserVerificationMail,
-                      child: Text(
-                        "Send verification mail again?",
-                        style: TextStyle(
-                            fontFamily: 'LexendDeca',
-                            fontSize: 14.0,
-                            color: Colors.black),
-                      ))),
-              SizedBox(
-                height: 20.0,
-              ),
-              MaterialButton(
-                onPressed: logoutUser,
-                height: 50.0,
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                shape: StadiumBorder(),
-                child: Text(
-                  "Logout",
-                  style: TextStyle(
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                  20.0, 300.0, 20.0, 0), //text username
+              child: Column(
+                children: <Widget>[
+                  new Text(
+                    "Welcome $userName",
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor,
+                      fontFamily: 'LexendDeca',
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+
+                  //text of verification status
+                  new Text(
+                    "Verification Status: $verified",
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor,
                       fontFamily: 'LexendDeca',
                       fontSize: 16.0,
-                      color: Colors.white),
-                ),
-                color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  //visibilty so that if user is verified, the verification mail is not seen again and again
+                  Visibility(
+                      visible: senvermail,
+                      child: TextButton(
+                          onPressed: sendUserVerificationMail,
+                          child: Text(
+                            "Send verification mail again?",
+                            style: TextStyle(
+                                fontFamily: 'LexendDeca',
+                                fontSize: 14.0,
+                                color: Theme.of(context).highlightColor),
+                          ))),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    "Dark Mode 👇👇",
+                    style: TextStyle(
+                      color: Theme.of(context).highlightColor,
+                      fontFamily: 'LexendDeca',
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  //switchlisttile switch
+                  Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Consumer<ThemeNotifier>(
+                          builder: (context, notifier, child) => SwitchListTile(
+                            title: Text("Dark Mode"),
+                            onChanged: (value) {
+                              notifier.toggleTheme();
+                            },
+                            value: notifier.darkTheme,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  //logout button
+                  MaterialButton(
+                    onPressed: logoutUser,
+                    height: 50.0,
+                    padding: EdgeInsets.symmetric(horizontal: 40.0),
+                    shape: StadiumBorder(),
+                    child: Text(
+                      "Logout",
+                      style: TextStyle(
+                          fontFamily: 'LexendDeca',
+                          fontSize: 16.0,
+                          color: Theme.of(context).cardColor),
+                    ),
+                    color: Theme.of(context).highlightColor,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            Positioned(
+              bottom: 0,
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 20.0,
+                color: Theme.of(context).focusColor,
+              ),
+            ),
+          ],
         ),
       ),
     );

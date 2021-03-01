@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:bharat_mystery/main.dart';
 import 'package:bharat_mystery/screens/monument.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -70,7 +71,7 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Scaffold(
-              backgroundColor: Color(0xffA0E7E5),
+              backgroundColor: Theme.of(context).accentColor,
               body: Center(child: CircularProgressIndicator()),
             );
           }
@@ -81,7 +82,7 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(
-                color: Color(0xffA0E7E5),
+                color: Theme.of(context).focusColor,
               ),
               child: Stack(
                 children: <Widget>[
@@ -93,9 +94,14 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
                       itemBuilder: (context, index) {
                         return Card(
                           child: ListTile(
-                            leading: Icon(Icons.place),
-                            title: Text((allmonuments[index])[
-                                "name"]), // name property of indexed monument
+                            leading: Icon(Icons.place,
+                                color: Theme.of(context).highlightColor),
+                            title: Text((allmonuments[index])["name"],
+                                style: TextStyle(
+                                    color: Theme.of(context).highlightColor)),
+                            tileColor: Theme.of(context).cardColor,
+
+                            // name property of indexed monument
                             onTap: () {
                               Navigator.push(
                                   context,
@@ -115,7 +121,7 @@ class _SelectMonumentContentState extends State<SelectMonumentContent> {
                     child: Container(
                       width: MediaQuery.of(context).size.width,
                       height: 20.0,
-                      color: Color(0xffA0E7E5),
+                      color: Theme.of(context).focusColor,
                     ),
                   ),
                 ],

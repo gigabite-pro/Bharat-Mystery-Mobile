@@ -117,7 +117,7 @@ class _MonumentContentState extends State<MonumentContent> {
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
-              color: Color(0xffA0E7E5),
+              color: Theme.of(context).accentColor,
             ),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 0.0),
@@ -152,6 +152,7 @@ class _MonumentContentState extends State<MonumentContent> {
                             Text(
                               result["name"].toString(),
                               style: TextStyle(
+                                  color: Colors.black,
                                   fontFamily: 'LexendDeca',
                                   fontSize: 24.0,
                                   fontWeight: FontWeight.w900),
@@ -162,6 +163,7 @@ class _MonumentContentState extends State<MonumentContent> {
                             Text(
                               result["place"].toString(),
                               style: TextStyle(
+                                  color: Colors.black,
                                   fontFamily: 'LexendDeca',
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w500),
@@ -308,12 +310,14 @@ class _MonumentContentState extends State<MonumentContent> {
                             SizedBox(
                               height: 5.0,
                             ),
+
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Information",
                                   style: TextStyle(
+                                    color: Colors.black,
                                     fontFamily: 'LexendDeca',
                                     fontSize: 20.0,
                                   ),
@@ -339,6 +343,7 @@ class _MonumentContentState extends State<MonumentContent> {
                                 child: Text(
                                   result["info"].toString(),
                                   style: TextStyle(
+                                    color: Colors.black,
                                     fontFamily: 'LexendDeca',
                                     fontSize: 15.0,
                                   ),
@@ -367,9 +372,9 @@ class _MonumentContentState extends State<MonumentContent> {
                         style: TextStyle(
                             fontFamily: 'LexendDeca',
                             fontSize: 16.0,
-                            color: Colors.white),
+                            color: Theme.of(context).cardColor),
                       ),
-                      color: Colors.black,
+                      color: Theme.of(context).highlightColor,
                     ),
                   ],
                 ),

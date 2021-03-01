@@ -2,10 +2,16 @@ import 'package:bharat_mystery/screens/login.dart';
 import 'package:bharat_mystery/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/services.dart';
 
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.portraitUp,
+    ]);
+
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.white,
@@ -16,7 +22,7 @@ class AuthScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.80,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Color(0xffA0E7E5),
+                color: Theme.of(context).accentColor,
                 borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(50.0),
                     bottomRight: Radius.circular(50.0)),
@@ -38,6 +44,7 @@ class AuthScreen extends StatelessWidget {
                     Text(
                       "Bharat Mystery",
                       style: TextStyle(
+                        color: Theme.of(context).highlightColor,
                         fontSize: 30.0,
                         fontFamily: 'LexendDeca',
                         fontWeight: FontWeight.w600,
@@ -59,12 +66,12 @@ class AuthScreen extends StatelessWidget {
                               builder: (BuildContext context) => RegisterPage(),
                             ));
                       },
-                      color: Colors.black,
+                      color: Theme.of(context).highlightColor,
                       child: Text(
                         "Register",
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                         ),
                       ),
                     ),
@@ -84,12 +91,12 @@ class AuthScreen extends StatelessWidget {
                               builder: (BuildContext context) => LoginPage(),
                             ));
                       },
-                      color: Colors.black,
+                      color: Theme.of(context).highlightColor,
                       child: Text(
                         "Login",
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: Colors.white,
+                          color: Theme.of(context).cardColor,
                         ),
                       ),
                     ),
