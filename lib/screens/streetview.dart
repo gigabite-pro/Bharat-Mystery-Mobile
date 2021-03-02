@@ -15,17 +15,19 @@ class _StreetViewState extends State<StreetView> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xffA0E7E5),
+          backgroundColor: Theme.of(context).accentColor,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
+              color: Theme.of(context).highlightColor,
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
             "Street View",
-            style: TextStyle(fontFamily: 'LexendDeca', color: Colors.black),
+            style: TextStyle(
+                fontFamily: 'LexendDeca',
+                color: Theme.of(context).highlightColor),
           ),
         ),
         body: WebView(

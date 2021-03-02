@@ -31,9 +31,11 @@ class _DirectionsState extends State<Directions> {
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Scaffold(
-                backgroundColor: Color(0xffA0E7E5),
+                backgroundColor: Theme.of(context).focusColor,
                 body: Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(Colors.black)),
                 ),
               );
             }
