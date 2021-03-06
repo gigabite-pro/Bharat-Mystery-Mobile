@@ -221,7 +221,7 @@ class _QuizState extends State<Quiz> {
                                 } else {
                                   Fluttertoast.showToast(
                                       msg:
-                                          'You need atleast 2 answers correct to unlock the next monument',
+                                          'You need atleast 2 correct answers to unlock the next monument',
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1);

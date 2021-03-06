@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:cached_network_image/cached_network_image.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -19,6 +21,13 @@ class _RegisterPageState extends State<RegisterPage> {
   bool _passwordVisible = true;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) => getAllMonuments());
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -244,6 +253,19 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  // var allMonuments;
+
+  // getAllMonuments() async {
+  //   final getAllMonumentsEndpoint =
+  //       'https://bharat-mystery-api.herokuapp.com/allmonuments';
+  //   final response = await http.get(getAllMonumentsEndpoint);
+  //   if (response.statusCode == 200) {
+  //     allMonuments = json.decode(response.body);
+  //     print(allMonuments);
+  //   }
+  //   allMonuments = null;
+  // }
+
   Future<void> registerUser() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
@@ -262,16 +284,26 @@ class _RegisterPageState extends State<RegisterPage> {
         DateTime now = DateTime.now();
         String _formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
 
+        // Map _levels = {};
+        // for (var i = 1; i < allMonuments.length + 1; i++) {
+        //   if (i == 1) {
+        //     _levels[i] = true;
+        //   } else {
+        //     _levels[i] = false;
+        //   }
+        // }
+
         //create a map with name email and registration date
         Map<String, dynamic> userData = {
           "name": this._registerName,
           "email": this._registerEmail,
-          "registered_On": _formattedDate
+          "registered_On": _formattedDate,
+          // "levels": _levels,
         };
         //upload the map
         users.doc(user.uid).set(userData);
         Fluttertoast.showToast(
-            msg: "email verification send, please verify " + _registerName);
+            msg: "email verification sent, please verify " + _registerName);
         _registerEmail = null;
         _registerPassword = null;
         _registerName = null;
