@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Quiz extends StatefulWidget {
   final int snumber;
@@ -14,6 +17,9 @@ class Quiz extends StatefulWidget {
 
 class _QuizState extends State<Quiz> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   getAllQuestions() async {
     final getAllMonumentsEndpoint =
@@ -28,6 +34,7 @@ class _QuizState extends State<Quiz> {
   String ans1;
   String ans2;
   String ans3;
+  String uid;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +43,7 @@ class _QuizState extends State<Quiz> {
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
-            backgroundColor: Color(0xffA0E7E5),
+            backgroundColor: Theme.of(context).focusColor,
             body: Center(
               child: CircularProgressIndicator(),
             ),
@@ -64,8 +71,23 @@ class _QuizState extends State<Quiz> {
           }
         }
 
+        Future<Void> testPassed() async {
+          final prefs = await SharedPreferences.getInstance();
+          uid = prefs.getString('GLOBAL_USER_DATA');
+
+          Map<String, dynamic> mapTrue = {
+            (widget.snumber + 1).toString(): true
+          };
+
+          await users
+              .doc(uid.toString())
+              .collection((widget.snumber + 1).toString())
+              .doc((widget.snumber + 1).toString())
+              .set(mapTrue);
+        }
+
         return Scaffold(
-          backgroundColor: Color(0xffA0E7E5),
+          backgroundColor: Theme.of(context).accentColor,
           body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 1.3,
@@ -83,7 +105,7 @@ class _QuizState extends State<Quiz> {
                               fontFamily: 'LexendDeca',
                               fontSize: 27.0,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black),
+                              color: Theme.of(context).highlightColor),
                         ),
                       ],
                     ),
@@ -94,17 +116,19 @@ class _QuizState extends State<Quiz> {
                       key: _formKey,
                       child: Column(
                         children: <Widget>[
+                          //ques 1
                           Text(
                             (allQues[0])["ques"],
                             style: TextStyle(
                                 fontFamily: 'LexendDeca',
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w200,
-                                color: Colors.black),
+                                color: Theme.of(context).highlightColor),
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
+                          //answer field
                           TextFormField(
                             style: TextStyle(
                               color: Colors.black,
@@ -131,17 +155,20 @@ class _QuizState extends State<Quiz> {
                           SizedBox(
                             height: 20.0,
                           ),
+
+                          //ques 2
                           Text(
                             (allQues[1])["ques"],
                             style: TextStyle(
                                 fontFamily: 'LexendDeca',
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w200,
-                                color: Colors.black),
+                                color: Theme.of(context).highlightColor),
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
+                          //answer field
                           TextFormField(
                             style: TextStyle(
                               color: Colors.black,
@@ -168,17 +195,20 @@ class _QuizState extends State<Quiz> {
                           SizedBox(
                             height: 20.0,
                           ),
+
+                          //ques3
                           Text(
                             (allQues[2])["ques"],
                             style: TextStyle(
                                 fontFamily: 'LexendDeca',
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w200,
-                                color: Colors.black),
+                                color: Theme.of(context).highlightColor),
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
+                          //answer field
                           TextFormField(
                             style: TextStyle(
                               color: Colors.black,
@@ -205,6 +235,7 @@ class _QuizState extends State<Quiz> {
                           SizedBox(
                             height: 25.0,
                           ),
+                          //submit button
                           MaterialButton(
                             onPressed: () {
                               final formState = _formKey.currentState;
@@ -218,10 +249,11 @@ class _QuizState extends State<Quiz> {
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1);
+                                  testPassed();
                                 } else {
                                   Fluttertoast.showToast(
                                       msg:
-                                          'You need atleast 2 answers correct to unlock the next monument',
+                                          "You need atleast 2 answers correct to unlock the next monument, please check spelling's too",
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.BOTTOM,
                                       timeInSecForIosWeb: 1);
@@ -236,9 +268,9 @@ class _QuizState extends State<Quiz> {
                               style: TextStyle(
                                   fontFamily: 'LexendDeca',
                                   fontSize: 16.0,
-                                  color: Colors.white),
+                                  color: Theme.of(context).cardColor),
                             ),
-                            color: Colors.black,
+                            color: Theme.of(context).highlightColor,
                           ),
                         ],
                       ),

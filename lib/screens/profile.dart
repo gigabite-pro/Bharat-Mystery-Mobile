@@ -220,7 +220,8 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
   Future<void> sendUserVerificationMail() async {
     User user = FirebaseAuth.instance.currentUser;
     user.sendEmailVerification().catchError((e) {
-      Fluttertoast.showToast(msg: "verification mail failed to be sent");
+      Fluttertoast.showToast(
+          msg: "verification mail failed to be sent" + e.toString());
     });
     Fluttertoast.showToast(msg: "verification mail sent");
   }
