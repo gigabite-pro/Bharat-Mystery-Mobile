@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
             children: <Widget>[
               //bharat mystery logo and image
               Padding(
-                padding: const EdgeInsets.fromLTRB(0, 30.0, 0, 40.0),
+                padding: const EdgeInsets.fromLTRB(0, 40.0, 0, 30.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Column(
@@ -49,7 +49,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: <Widget>[
                       Container(
                         child: CachedNetworkImage(
-                          imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                          imageUrl: "https://i.imgur.com/9JCxapv.png",
+                          height: MediaQuery.of(context).size.height * 0.27,
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),
                         ),

@@ -35,7 +35,8 @@ class AuthScreen extends StatelessWidget {
                       children: <Widget>[
                         Container(
                           child: CachedNetworkImage(
-                            imageUrl: "https://i.imgur.com/W0fE4FL.png",
+                            imageUrl: "https://i.imgur.com/9JCxapv.png",
+                            height: MediaQuery.of(context).size.height * 0.27,
                             placeholder: (context, url) =>
                                 CircularProgressIndicator(),
                           ),

@@ -10,7 +10,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="bharat_mystery"
+        android:label="Bharat Mystery"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
