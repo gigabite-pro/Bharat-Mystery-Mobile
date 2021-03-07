@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -123,13 +124,13 @@ class _ProfileState extends State<Profile> with AutomaticKeepAliveClientMixin {
                                     TextButton(
                                       onPressed: () => {
                                         notifier.toggleTheme(),
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                    builder: (BuildContext
-                                                            context) =>
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) =>
                                                         MyApp()),
-                                                (route) => false)
+                                            (route) => false)
                                       },
                                       child: Text('Yes'),
                                     ),

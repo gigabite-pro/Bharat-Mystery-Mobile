@@ -3,8 +3,33 @@ import 'package:bharat_mystery/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class AuthScreen extends StatelessWidget {
+import 'homepage.dart';
+
+class AuthScreen extends StatefulWidget {
+  @override
+  _AuthScreenState createState() => _AuthScreenState();
+}
+
+class _AuthScreenState extends State<AuthScreen> {
+  String uid;
+  @override
+  void initState() {
+    super.initState();
+    _asyncMethodInnitState();
+  }
+
+  //god this was hell, wasted like 3 hours, trying to update the name of the user, after welcome.
+  void _asyncMethodInnitState() async {
+    final prefs = await SharedPreferences.getInstance();
+    uid = prefs.getString('GLOBAL_USER_DATA');
+    if (uid != null) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
